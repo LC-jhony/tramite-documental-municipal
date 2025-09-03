@@ -3,25 +3,23 @@
 namespace App\Filament\User\Resources\Tramites\Tables;
 
 use App\Models\Area;
-use App\Models\User;
-use App\Models\Tramite;
 use App\Models\Derivation;
-use Filament\Tables\Table;
+use App\Models\Tramite;
+use App\Models\User;
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
-use Filament\Actions\ActionGroup;
-use Filament\Support\Enums\Width;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Forms\Components\Select;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Forms\Components\Textarea;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Support\Enums\Width;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
 use Hugomyb\FilamentMediaAction\Actions\MediaAction;
 
 class TramitesTable
@@ -60,7 +58,7 @@ class TramitesTable
                 TextColumn::make('status')
                     ->label('Estado')
                     ->badge()
-                    ->formatStateUsing(fn(string $state): string => match ($state) {
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
                         'draft' => 'Borrador',
                         'received' => 'Recibido',
                         'in_process' => 'En Proceso',
@@ -69,7 +67,7 @@ class TramitesTable
                         'archived' => 'Archivado',
                         default => ucfirst($state),
                     })
-                    ->color(fn(string $state): string => match ($state) {
+                    ->color(fn (string $state): string => match ($state) {
                         'draft' => 'gray',
                         'received' => 'info',
                         'in_process' => 'warning',
@@ -103,7 +101,7 @@ class TramitesTable
                 Action::make('derivar')
                     ->label('Derivar')
                     ->icon('heroicon-o-arrow-right-circle')
-                    ->fillForm(fn(Tramite $record) => [
+                    ->fillForm(fn (Tramite $record) => [
                         'tramite_id' => $record->id,
                         'from_area_id' => $record->area_oreigen_id,
                         'user_id' => auth()->id(),
@@ -147,7 +145,7 @@ class TramitesTable
                             ->options([
                                 'sent' => 'Enviado',
                                 'received' => 'Recibido',
-                                'returned' => 'Devuelto'
+                                'returned' => 'Devuelto',
                             ])
                             ->default('sent')
                             ->native(false)
@@ -158,7 +156,7 @@ class TramitesTable
                     ])
                     ->action(function (Tramite $record, array $data): void {
                         // Crear la derivación directamente
-                        $derivation = new Derivation();
+                        $derivation = new Derivation;
                         $derivation->tramite_id = $record->id;
                         $derivation->from_area_id = $record->area_oreigen_id;
                         $derivation->to_area_id = $data['to_area_id'];
@@ -200,15 +198,15 @@ class TramitesTable
                 MediaAction::make('pdf')
                     ->label('Ver PDF')
                     ->color('danger')
-                    //->button()
-                    ->media(fn($record) => $record->file_path ? asset('storage/' . $record->file_path) : null)
+                    // ->button()
+                    ->media(fn ($record) => $record->file_path ? asset('storage/'.$record->file_path) : null)
                     ->icon('bi-file-pdf-fill')
-                    ->visible(fn($record) => !empty($record->file_path)),
+                    ->visible(fn ($record) => ! empty($record->file_path)),
                 ActionGroup::make([
                     ViewAction::make(),
                     EditAction::make(),
                     DeleteAction::make(),
-                ])
+                ]),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

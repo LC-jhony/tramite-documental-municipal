@@ -9,13 +9,15 @@ class Area extends Model
 {
     /** @use HasFactory<\Database\Factories\AreaFactory> */
     use HasFactory;
+
     protected $fillable = [
-        "name",
-        "code",
-        "status",
+        'name',
+        'code',
+        'status',
     ];
+
     protected $casts = [
-        "status" => "boolean",
+        'status' => 'boolean',
     ];
 
     public function user()

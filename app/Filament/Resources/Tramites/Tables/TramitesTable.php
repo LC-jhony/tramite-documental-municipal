@@ -6,14 +6,10 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
-use Filament\Actions\ActionGroup;
-use Filament\Actions\Action;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
 use Filament\Tables\Filters\SelectFilter;
-use App\Models\Area;
-use App\Models\Tramite;
+use Filament\Tables\Table;
 
 class TramitesTable
 {
@@ -68,7 +64,7 @@ class TramitesTable
                 TextColumn::make('status')
                     ->label('Estado')
                     ->badge()
-                    ->formatStateUsing(fn(string $state): string => match ($state) {
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
                         'draft' => 'Borrador',
                         'received' => 'Recibido',
                         'in_process' => 'En Proceso',
@@ -77,7 +73,7 @@ class TramitesTable
                         'archived' => 'Archivado',
                         default => ucfirst($state),
                     })
-                    ->color(fn(string $state): string => match ($state) {
+                    ->color(fn (string $state): string => match ($state) {
                         'draft' => 'gray',
                         'received' => 'info',
                         'in_process' => 'warning',

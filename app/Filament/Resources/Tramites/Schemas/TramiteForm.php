@@ -4,20 +4,19 @@ namespace App\Filament\Resources\Tramites\Schemas;
 
 use App\Models\Tramite;
 use App\Models\TypeDocument;
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Components\Grid;
+use Asmit\FilamentUpload\Enums\PdfViewFit;
+use Asmit\FilamentUpload\Forms\Components\AdvancedFileUpload;
 use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\DatePicker;
-use Filament\Schemas\Components\Fieldset;
-use Asmit\FilamentUpload\Enums\PdfViewFit;
 use Filament\Forms\Components\ToggleButtons;
+use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Ysfkaya\FilamentPhoneInput\Forms\PhoneInput;
-use Asmit\FilamentUpload\Forms\Components\AdvancedFileUpload;
 
 class TramiteForm
 {
@@ -44,7 +43,7 @@ class TramiteForm
                                     ->grouped()
                                     ->default(true),
                                 Fieldset::make('Persona Natural')
-                                    ->visible(fn($get) => $get('representation') === true)
+                                    ->visible(fn ($get) => $get('representation') === true)
                                     ->schema([
                                         TextInput::make('dni')
                                             ->label('DNI')
@@ -65,7 +64,7 @@ class TramiteForm
                                             ->requiredWith('representation'),
                                     ]),
                                 Fieldset::make('Persona Juridica')
-                                    ->visible(fn($get) => $get('representation') === false)
+                                    ->visible(fn ($get) => $get('representation') === false)
                                     ->schema([
                                         TextInput::make('ruc')
                                             ->numeric()
@@ -97,7 +96,7 @@ class TramiteForm
                                     ->schema([
                                         TextInput::make('number')
                                             ->label('Codigo de Documento')
-                                            ->default('COD-' . random_int(100000, 999999))
+                                            ->default('COD-'.random_int(100000, 999999))
                                             ->disabled()
                                             ->dehydrated()
                                             ->required()
@@ -165,7 +164,7 @@ class TramiteForm
                     ->pdfToolbar(true) // Enable toolbar
                     ->pdfZoomLevel(100) // Set zoom level
                     ->pdfFitType(PdfViewFit::FIT) // Set fit type
-                    ->pdfNavPanes(true) // Enable navigation panes
+                    ->pdfNavPanes(true), // Enable navigation panes
 
             ]);
     }

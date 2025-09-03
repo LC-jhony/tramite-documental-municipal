@@ -2,10 +2,9 @@
 
 namespace App\Filament\User\Resources\Tramites\Schemas;
 
-use Filament\Schemas\Schema;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
-use Asmit\FilamentUpload\Forms\Components\AdvancedFileUpload;
+use Filament\Schemas\Schema;
 use Joaopaulolndev\FilamentPdfViewer\Infolists\Components\PdfViewerEntry;
 
 class TramiteInfolist
@@ -43,7 +42,7 @@ class TramiteInfolist
                 TextEntry::make('status')
                     ->label('Estado')
                     ->badge()
-                    ->formatStateUsing(fn(string $state): string => match ($state) {
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
                         'draft' => 'Borrador',
                         'received' => 'Recibido',
                         'in_process' => 'En Proceso',
@@ -52,7 +51,7 @@ class TramiteInfolist
                         'archived' => 'Archivado',
                         default => ucfirst($state),
                     })
-                    ->color(fn(string $state): string => match ($state) {
+                    ->color(fn (string $state): string => match ($state) {
                         'draft' => 'gray',
                         'received' => 'info',
                         'in_process' => 'warning',

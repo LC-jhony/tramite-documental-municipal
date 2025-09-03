@@ -9,12 +9,14 @@ class TypeDocument extends Model
 {
     /** @use HasFactory<\Database\Factories\TypeDocumentFactory> */
     use HasFactory;
+
     protected $fillable = [
         'name',
         'code',
         'status',
-        'response_time_days'
+        'response_time_days',
     ];
+
     protected $casts = [
         'status' => 'boolean',
         'response_time_days' => 'integer',

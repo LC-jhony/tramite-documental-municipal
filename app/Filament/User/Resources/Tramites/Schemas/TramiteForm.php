@@ -6,21 +6,17 @@ use App\Models\Area;
 use App\Models\Tramite;
 use App\Models\TypeDocument;
 use App\Models\User;
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Components\Grid;
+use Asmit\FilamentUpload\Enums\PdfViewFit;
+use Asmit\FilamentUpload\Forms\Components\AdvancedFileUpload;
 use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\DatePicker;
-use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Fieldset;
-use Asmit\FilamentUpload\Enums\PdfViewFit;
-use Filament\Forms\Components\ToggleButtons;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
-use Ysfkaya\FilamentPhoneInput\Forms\PhoneInput;
-use Asmit\FilamentUpload\Forms\Components\AdvancedFileUpload;
 
 class TramiteForm
 {
@@ -39,13 +35,13 @@ class TramiteForm
                                     ->native(false)
                                     ->required()
                                     ->disabled()
-                                    ->dehydrated()
+                                    ->dehydrated(),
                             ]),
                         Fieldset::make('Datos Tramite')
                             ->schema([
                                 TextInput::make('number')
                                     ->label('Codigo de Documento')
-                                    ->default('COD-' . random_int(100000, 999999))
+                                    ->default('COD-'.random_int(100000, 999999))
                                     ->disabled()
                                     ->dehydrated()
                                     ->required()
@@ -97,7 +93,7 @@ class TramiteForm
                             ->directory('documents')
                             ->helperText(str('El archivo  **de tramite** debe de subirlo para realizar el tramite.')->inlineMarkdown()->toHtmlString())
                             ->getUploadedFileNameForStorageUsing(
-                                fn(TemporaryUploadedFile $file): string => (string) str($file->getClientOriginalName())
+                                fn (TemporaryUploadedFile $file): string => (string) str($file->getClientOriginalName())
                                     ->prepend('tramite-'),
                             )
                             ->acceptedFileTypes(['application/pdf'])
@@ -107,7 +103,7 @@ class TramiteForm
                             ->pdfToolbar(true) // Enable toolbar
                             ->pdfZoomLevel(100) // Set zoom level
                             ->pdfFitType(PdfViewFit::FIT) // Set fit type
-                            ->pdfNavPanes(true) // Enable navigation panes
+                            ->pdfNavPanes(true), // Enable navigation panes
                     ])
                     ->collapsible(),
                 Section::make()
@@ -119,8 +115,8 @@ class TramiteForm
                             ->rule('required')
                             ->default(true)
                             ->disabled()
-                            ->dehydrated()
-                    ])->columnSpanFull()
+                            ->dehydrated(),
+                    ])->columnSpanFull(),
             ]);
     }
 }

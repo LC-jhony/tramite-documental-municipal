@@ -9,6 +9,7 @@ class Employe extends Model
 {
     /** @use HasFactory<\Database\Factories\EmployeFactory> */
     use HasFactory;
+
     protected $fillable = [
         'name',
         'first_name',
@@ -17,6 +18,7 @@ class Employe extends Model
         'email',
         'phone',
     ];
+
     protected $casts = [
         'dni' => 'integer',
     ];

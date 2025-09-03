@@ -9,6 +9,7 @@ class Tramite extends Model
 {
     /** @use HasFactory<\Database\Factories\TramiteFactory> */
     use HasFactory;
+
     protected $fillable = [
         'representation',
         'full_name',
@@ -34,11 +35,13 @@ class Tramite extends Model
         'condition',
         'status',
     ];
+
     protected $casts = [
         'representation' => 'boolean',
         'reception_date' => 'date',
         'status' => 'string',
     ];
+
     public function documentTypes()
     {
         return $this->belongsTo(
@@ -46,6 +49,7 @@ class Tramite extends Model
             'document_type_id',
         );
     }
+
     public function areaOrigen()
     {
         return $this->belongsTo(
@@ -53,10 +57,12 @@ class Tramite extends Model
             'area_oreigen_id',
         );
     }
+
     public function derivations()
     {
         return $this->hasMany(Derivation::class);
     }
+
     public function user()
     {
         return $this->belongsTo(
@@ -64,6 +70,7 @@ class Tramite extends Model
             'user_id',
         );
     }
+
     public function derive($toAreaId, $userId, $observation = null)
     {
         $derivation = $this->derivations()->create([
@@ -77,8 +84,10 @@ class Tramite extends Model
             'status' => 'derived',
             'area_oreigen_id' => $toAreaId,
         ]);
+
         return $derivation;
     }
+
     // 📥 Bandeja de entrada
     public function scopeInbox($query, $areaId)
     {
