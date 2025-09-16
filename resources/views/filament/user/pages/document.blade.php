@@ -1,3 +1,9 @@
 <x-filament-panels::page>
-    {{-- Page content --}}
+    <form wire:submit="create">
+        {{ $this->form }}
+        
+        <button type="submit">
+            Submit
+        </button>
+    </form>
 </x-filament-panels::page>

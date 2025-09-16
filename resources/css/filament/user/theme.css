@@ -1,0 +1,25 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@source '../../../../app/Filament/User/**/*';
+@source '../../../../resources/views/filament/user/**/*';
+
+.fi-topbar-item fi-active a {
+  @apply bg-indigo-500;
+
+  &>svg,
+  span {
+    @apply text-white;
+  }
+
+  &:hover {
+    @apply bg-indigo-400;
+  }
+}
+
+/* .fi-topbar {
+  @apply !bg-inherit ring-0 shadow-none;
+}
+
+.fi-sidebar-header {
+  @apply !bg-inherit ring-0 shadow-none;
+} */
