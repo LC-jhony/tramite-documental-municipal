@@ -15,6 +15,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class AreaResource extends Resource
 {
@@ -22,8 +23,8 @@ class AreaResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = "phosphor-building-office";
     protected static ?string $modelLabel = "Area";
-    
     protected static ?string $recordTitleAttribute = 'Area';
+    protected static string | UnitEnum | null $navigationGroup = "Institución";
 
     public static function form(Schema $schema): Schema
     {

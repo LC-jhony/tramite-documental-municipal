@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Filament\Resources\Areas\Pages;
+namespace App\Filament\Resources\Gestions\Pages;
 
-use App\Filament\Resources\Areas\AreaResource;
+use App\Filament\Resources\Gestions\GestionResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
-class ListAreas extends ListRecords
+class ListGestions extends ListRecords
 {
-    protected static string $resource = AreaResource::class;
+    protected static string $resource = GestionResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
             CreateAction::make()
+                ->label('Crear Gestion')
                 ->icon('heroicon-s-squares-plus'),
         ];
     }
