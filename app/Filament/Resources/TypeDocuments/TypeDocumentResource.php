@@ -20,9 +20,11 @@ class TypeDocumentResource extends Resource
 {
     protected static ?string $model = TypeDocument::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = "sui-document-stack";
 
     protected static ?string $recordTitleAttribute = 'TypeDocument';
+
+    protected static ?string $modelLabel = "Tipo";
 
     public static function form(Schema $schema): Schema
     {

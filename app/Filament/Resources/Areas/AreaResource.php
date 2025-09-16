@@ -20,8 +20,9 @@ class AreaResource extends Resource
 {
     protected static ?string $model = Area::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
-
+    protected static string|BackedEnum|null $navigationIcon = "phosphor-building-office";
+    protected static ?string $modelLabel = "Area";
+    
     protected static ?string $recordTitleAttribute = 'Area';
 
     public static function form(Schema $schema): Schema

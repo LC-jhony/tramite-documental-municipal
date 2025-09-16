@@ -8,7 +8,12 @@
     "require": {
         "php": "^8.2",
         "asmit/filament-upload": "^1.1",
+        "bezhansalleh/filament-shield": "^4.0",
+        "codeat3/blade-clarity-icons": "^1.10",
         "codeat3/blade-google-material-design-icons": "^1.20",
+        "codeat3/blade-phosphor-icons": "^2.3",
+        "codeat3/blade-solar-icons": "^1.2",
+        "codeat3/blade-system-uicons": "^1.8",
         "davidhsianturi/blade-bootstrap-icons": "^2.1",
         "diogogpinto/filament-auth-ui-enhancer": "^2.0",
         "eduard9969/blade-polaris-icons": "^2.8",

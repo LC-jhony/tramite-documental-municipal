@@ -20,8 +20,9 @@ class EmployeResource extends Resource
 {
     protected static ?string $model = Employe::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
-
+    protected static string|BackedEnum|null $navigationIcon = "clarity-employee-group-line";
+    protected static ?string $modelLabel = "Empleado";
+    
     protected static ?string $recordTitleAttribute = 'Employe';
 
     public static function form(Schema $schema): Schema

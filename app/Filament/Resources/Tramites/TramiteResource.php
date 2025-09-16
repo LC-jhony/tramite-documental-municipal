@@ -20,7 +20,8 @@ class TramiteResource extends Resource
 {
     protected static ?string $model = Tramite::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = "solar-folder-with-files-outline";
+    protected static ?string $modelLabel = "Tramite";
 
     protected static ?string $recordTitleAttribute = 'Tramite';
 
