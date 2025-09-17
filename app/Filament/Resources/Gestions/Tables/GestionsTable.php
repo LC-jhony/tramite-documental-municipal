@@ -22,11 +22,9 @@ class GestionsTable
             ->columns([
                 TextColumn::make('start_year')
                     ->label('Año Inicio')
-                    ->numeric()
                     ->sortable(),
                 TextColumn::make('end_year')
                     ->label('Año Fin')
-                    ->numeric()
                     ->sortable(),
                 TextColumn::make('name')
                     ->label('Nombre')
