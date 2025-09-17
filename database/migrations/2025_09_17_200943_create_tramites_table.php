@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('empresa')->nullable();
             $table->unsignedBigInteger('document_type_id');
             $table->unsignedBigInteger('area_oreigen_id');
-            //  $table->unsignedBigInteger('gestion_id');
+            $table->unsignedBigInteger('gestion_id');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('folio');
             // $table->date('receip_date');
@@ -52,13 +52,12 @@ return new class extends Migration
                 ->references('id')
                 ->on('areas')
                 ->onDelete('cascade');
-            // $table->foreign('gestion_id')->references('id')->on('gestions')->onDelete('cascade');
+            $table->foreign('gestion_id')->references('id')->on('gestions')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null'); // Permitir nulo si el usuario es eliminado
 
             // Índices para consultas frecuentes
             $table->index('status');
             $table->index('origen');
-
         });
     }
 

@@ -2,66 +2,80 @@
 
 namespace App\Filament\User\Resources\Tramites\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
+use App\Models\Area;
+use App\Models\Tramite;
+use Filament\Tables\Table;
+use Filament\Actions\Action;
 use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Actions\DeleteAction;
+use Illuminate\Support\Facades\Auth;
+use Filament\Actions\BulkActionGroup;
+use Filament\Forms\Components\Select;
+use Filament\Schemas\Components\Grid;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
 
 class TramitesTable
 {
     public static function configure(Table $table): Table
     {
         return $table
+            ->query(
+                Tramite::where(function ($query) {
+                    $query->where('user_id', Auth::id())
+                        ->orWhere('area_oreigen_id', Auth::user()->area_id);
+                })
+            )
             ->columns([
                 TextColumn::make('number')
                     ->searchable(),
-                TextColumn::make('subject')
-                    ->searchable(),
                 TextColumn::make('origen')
+                    ->alignCenter()
                     ->badge(),
-                IconColumn::make('representation')
-                    ->boolean(),
                 TextColumn::make('full_name')
                     ->searchable(),
-                TextColumn::make('first_name')
-                    ->searchable(),
-                TextColumn::make('last_name')
-                    ->searchable(),
-                TextColumn::make('dni')
-                    ->searchable(),
-                TextColumn::make('phone')
-                    ->searchable(),
-                TextColumn::make('email')
-                    ->label('Email address')
-                    ->searchable(),
-                TextColumn::make('address')
-                    ->searchable(),
-                TextColumn::make('ruc')
-                    ->searchable(),
-                TextColumn::make('empresa')
-                    ->searchable(),
-                TextColumn::make('document_type_id')
-                    ->numeric()
+                TextColumn::make('documentTypes.name')
+                    ->alignCenter()
                     ->sortable(),
-                TextColumn::make('area_oreigen_id')
-                    ->numeric()
+                TextColumn::make('areaOrigen.name')
+                    ->alignCenter()
                     ->sortable(),
-                TextColumn::make('user_id')
-                    ->numeric()
+                TextColumn::make('user.name')
+                    ->alignCenter()
                     ->sortable(),
                 TextColumn::make('folio')
+                    ->alignCenter()
                     ->searchable(),
                 TextColumn::make('reception_date')
+                    ->alignCenter()
                     ->date()
                     ->sortable(),
-                TextColumn::make('file_path')
-                    ->searchable(),
-                TextColumn::make('condition')
-                    ->searchable(),
                 TextColumn::make('status')
-                    ->badge(),
+                    ->label('Estado')
+                    ->badge()
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
+                        'draft' => 'Borrador',
+                        'received' => 'Recibido',
+                        'in_process' => 'En Proceso',
+                        'derived' => 'Derivado',
+                        'returned' => 'Devuelto',
+                        'archived' => 'Archivado',
+                        default => ucfirst($state),
+                    })
+                    ->color(fn(string $state): string => match ($state) {
+                        'draft' => 'gray',
+                        'received' => 'info',
+                        'in_process' => 'warning',
+                        'derived' => 'primary',
+                        'returned' => 'danger',
+                        'archived' => 'success',
+                        default => 'gray',
+                    }),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -75,7 +89,62 @@ class TramitesTable
                 //
             ])
             ->recordActions([
+                Action::make('Derivar')
+                    //->icon('letsicon-folder-send-duotone')
+                    //->iconSize('lg')
+                    ->icon('iconsax-bol-send-2')
+                    ->button()
+                    ->slideOver()
+                    ->fillForm(fn(Tramite $record) => [
+                        'tramite_id' => $record->id,
+                        'from_area_id' => $record->area_oreigen_id,
+                        'user_id' => $record->user_id,
+                        'file_path' => $record->file_path,
+                    ])
+                    ->form([
+                        Section::make('Informacion del Documento')
+                            ->columns(2)
+                            ->schema([
+                                Select::make('tramite_id')
+                                    ->label('documento')
+                                    ->options(Tramite::all()->pluck('number', 'id'))
+                                    ->required()
+                                    ->native(false),
+                                Select::make('from_area_id')
+                                    ->label('Area de Origen')
+                                    ->options(Area::where('status', true)->pluck('name', 'id'))
+                                    ->default(fn() => Auth::user()->area_id ?? 1) // Fallback al área con ID 1
+                                    ->disabled()
+                                    ->dehydrated(),
+
+                            ]),
+                        Section::make('Enviar documento')
+                            ->schema([
+                                Grid::make(2)
+                                    ->schema([
+                                        Select::make('to_area_id')
+                                            ->label('Area de Destino')
+                                            ->options(Area::where('status', true)->pluck('name', 'id'))
+                                            ->required()
+                                            ->native(false),
+                                        Select::make('user_id')
+                                            ->label('Usuario')
+                                            ->options([Auth::id() => Auth::user()->name])
+                                            ->default(fn() => Auth::id())
+                                            ->disabled()
+                                            ->dehydrated(),
+
+                                    ]),
+                                RichEditor::make('observations')
+                                    ->label('Observaciones')
+                                    ->required()
+                                    ->columnSpanFull()
+                            ])
+                    ]),
                 EditAction::make(),
+                ViewAction::make(),
+                DeleteAction::make(),
+
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

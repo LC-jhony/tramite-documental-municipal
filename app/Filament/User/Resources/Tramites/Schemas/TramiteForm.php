@@ -12,12 +12,14 @@ use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Grid;
+use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\RichEditor;
 use Asmit\FilamentUpload\Enums\PdfViewFit;
 use Ysfkaya\FilamentPhoneInput\Forms\PhoneInput;
-use Asmit\FilamentUpload\Forms\Components\AdvancedFileUpload;
+use Filament\Forms\Components\FileUpload;
 
 class TramiteForm
 {
@@ -104,13 +106,23 @@ class TramiteForm
                                             ->label('Gestion')
                                             ->options(Gestion::where('status', true)->pluck('name', 'id'))
                                             ->default(fn() => Gestion::where('status', true)->first()?->id)
+                                            ->disabled()
+                                            ->dehydrated()
                                             ->native(false),
                                         TextInput::make('folio')
                                             ->label('Folio')
-                                            // ->hint('Forgotten your password? Bad luck.')
+                                            ->hint('Forgotten your password? Bad luck.')
                                             ->required()
-
                                             ->numeric(),
+                                        TextInput::make('user_id')
+                                            ->label('Usuario')
+                                            ->default(fn() => Auth::id())
+                                            //->hidden()
+                                            ->dehydrated(),
+                                        RichEditor::make('subject')
+                                            ->label('Asunto del documento')
+                                            ->required()
+                                            ->columnSpan(2),
 
                                     ]),
                                 Section::make('Documento')
@@ -118,17 +130,21 @@ class TramiteForm
                                     ->iconColor('danger')
                                     ->columns(4)
                                     ->schema([
-                                        AdvancedFileUpload::make('file_path')
+                                        FileUpload::make('file_path')
                                             ->label('Archivo')
                                             ->required()
-                                            ->pdfPreviewHeight(500) // Customize preview height
-                                            ->pdfDisplayPage(1) // Set default page
-                                            ->pdfToolbar(true) // Enable toolbar
-                                            ->pdfZoomLevel(100) // Set zoom level
-                                            ->pdfFitType(PdfViewFit::FIT) // Set fit type
-                                            ->pdfNavPanes(true) // Enable navigation panes
+                                            ->acceptedFileTypes(['application/pdf'])
+                                            ->disk('public')
+                                            ->directory('tramites')
                                             ->columnSpanFull()
-                                    ])
+                                    ]),
+                                Checkbox::make('condition')
+                                    ->label('Acepto que todo acto administrativo derivado del presente procedimiento se me
+                                            notifique a mi correo electrónico (numeral 4 del artículo 20° del Texto Único
+                                            Ordenado de la Ley N° 27444)')
+                                    ->rule('required')
+                                    ->default(true)
+                                    ->columnSpanFull(),
                             ])
 
                     ])

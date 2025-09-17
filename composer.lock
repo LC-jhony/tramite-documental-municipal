@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b63e32da30169d251e068738e639c331",
+    "content-hash": "e4ccb7cf19935032f26b02e0711eebc5",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -4315,6 +4315,70 @@
             "time": "2025-07-17T05:12:15+00:00"
         },
         {
+            "name": "mansoor/blade-lets-icons",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mansoorkhan96/blade-lets-icons.git",
+                "reference": "0217edf1b5cc23a30004af7d522fecc4c0ffbc45"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mansoorkhan96/blade-lets-icons/zipball/0217edf1b5cc23a30004af7d522fecc4c0ffbc45",
+                "reference": "0217edf1b5cc23a30004af7d522fecc4c0ffbc45",
+                "shasum": ""
+            },
+            "require": {
+                "blade-ui-kit/blade-icons": "^1.6",
+                "illuminate/support": "^9.0|^10.0|^11.0|^12.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^7.0|^8.0|^9.0|^10.0",
+                "phpunit/phpunit": "^9.0|^10.5|^11.0|^12.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Mansoor\\LetsIcons\\BladeLetsIconsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Mansoor\\LetsIcons\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mansoor Ahmed"
+                }
+            ],
+            "description": "A package to easily make use of Lets Icons in your Laravel Blade views.",
+            "homepage": "https://github.com/mansoorkhan96/blade-lets-icons",
+            "keywords": [
+                "Lets Icons",
+                "blade",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/mansoorkhan96/blade-lets-icons/issues",
+                "source": "https://github.com/mansoorkhan96/blade-lets-icons/tree/v1.0.2"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/mansoorkhan96",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-05-22T05:35:38+00:00"
+        },
+        {
             "name": "masterminds/html5",
             "version": "2.10.0",
             "source": {
@@ -6290,6 +6354,70 @@
                 }
             ],
             "time": "2025-02-25T09:09:36+00:00"
+        },
+        {
+            "name": "saade/blade-iconsax",
+            "version": "v1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/saade/blade-iconsax.git",
+                "reference": "5e3bb6ccd41354f52380ff9a281999c0144923f9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/saade/blade-iconsax/zipball/5e3bb6ccd41354f52380ff9a281999c0144923f9",
+                "reference": "5e3bb6ccd41354f52380ff9a281999c0144923f9",
+                "shasum": ""
+            },
+            "require": {
+                "blade-ui-kit/blade-icons": "^1.1",
+                "illuminate/support": "^9.0|^10.0|^11.0|^12.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^7.0|^8.0|^9.0|^10.0",
+                "phpunit/phpunit": "^9.0|^10.5|^11.5.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Saade\\BladeIconsax\\BladeIconsaxServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Saade\\BladeIconsax\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Saade"
+                }
+            ],
+            "description": "A package to easily make use of Iconsax in your Laravel Blade views.",
+            "homepage": "https://github.com/saade/blade-iconsax",
+            "keywords": [
+                "Iconsax",
+                "blade",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/saade/blade-iconsax/issues",
+                "source": "https://github.com/saade/blade-iconsax/tree/v1.2.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/saade",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-02-19T17:19:39+00:00"
         },
         {
             "name": "scrivo/highlight.php",
