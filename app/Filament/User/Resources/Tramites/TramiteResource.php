@@ -18,8 +18,9 @@ class TramiteResource extends Resource
 {
     protected static ?string $model = Tramite::class;
 
-    protected static string|BackedEnum|null $navigationIcon = "solar-folder-with-files-outline";
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Schema $schema): Schema
     {

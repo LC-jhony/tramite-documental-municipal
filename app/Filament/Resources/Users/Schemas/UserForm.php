@@ -46,20 +46,20 @@ class UserForm
                             ->columns(6),
 
                     ]),
-                Section::make('User New Password')
-                    ->schema([
-                        TextInput::make('new_password')
-                            ->label('Nueva Contraseña')
-                            ->nullable()
-                            ->password()
-                            ->visible(fn($livewire) => $livewire instanceof EditUser)
-                            ->rule(Password::default()),
-                        TextInput::make('new_password_confirmation')
-                            ->label('Confirmar Nueva Contraseña')
-                            ->password()
-                            ->same('new_password')
-                            ->requiredWith('new_password'),
-                    ])
+                // Section::make('User New Password')
+                //     ->schema([
+                //         TextInput::make('new_password')
+                //             ->label('Nueva Contraseña')
+                //             ->nullable()
+                //             ->password()
+                //             ->visible(fn($livewire) => $livewire instanceof EditUser)
+                //             ->rule(Password::default()),
+                //         TextInput::make('new_password_confirmation')
+                //             ->label('Confirmar Nueva Contraseña')
+                //             ->password()
+                //             ->same('new_password')
+                //             ->requiredWith('new_password'),
+                //     ])
             ]);
     }
 }

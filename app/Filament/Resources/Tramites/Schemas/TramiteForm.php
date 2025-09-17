@@ -43,7 +43,7 @@ class TramiteForm
                                     ->grouped()
                                     ->default(true),
                                 Fieldset::make('Persona Natural')
-                                    ->visible(fn ($get) => $get('representation') === true)
+                                    ->visible(fn($get) => $get('representation') === true)
                                     ->schema([
                                         TextInput::make('dni')
                                             ->label('DNI')
@@ -64,7 +64,7 @@ class TramiteForm
                                             ->requiredWith('representation'),
                                     ]),
                                 Fieldset::make('Persona Juridica')
-                                    ->visible(fn ($get) => $get('representation') === false)
+                                    ->visible(fn($get) => $get('representation') === false)
                                     ->schema([
                                         TextInput::make('ruc')
                                             ->numeric()
@@ -96,7 +96,7 @@ class TramiteForm
                                     ->schema([
                                         TextInput::make('number')
                                             ->label('Codigo de Documento')
-                                            ->default('COD-'.random_int(100000, 999999))
+                                            ->default('COD-' . random_int(100000, 999999))
                                             ->disabled()
                                             ->dehydrated()
                                             ->required()
