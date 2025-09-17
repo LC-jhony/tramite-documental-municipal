@@ -1,9 +1,3 @@
 <x-filament-panels::page>
-    <form wire:submit="create">
-        {{ $this->form }}
-        
-        <button type="submit">
-            Submit
-        </button>
-    </form>
+    {{ $this->table }}
 </x-filament-panels::page>

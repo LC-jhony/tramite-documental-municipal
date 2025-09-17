@@ -5,6 +5,7 @@ namespace App\Filament\User\Resources\Tramites\Tables;
 use App\Models\Area;
 use App\Models\Tramite;
 use Filament\Tables\Table;
+use App\Enum\DerivarStatus;
 use Filament\Actions\Action;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
@@ -14,11 +15,12 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Forms\Components\Select;
 use Filament\Schemas\Components\Grid;
 use Filament\Actions\DeleteBulkAction;
-use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\RichEditor;
 
 class TramitesTable
 {
@@ -133,6 +135,14 @@ class TramitesTable
                                             ->default(fn() => Auth::id())
                                             ->disabled()
                                             ->dehydrated(),
+                                        Select::make('status')
+                                            ->label('Estado')
+                                            ->options(DerivarStatus::class)
+                                            ->native(false),
+                                        DatePicker::make('received_at')
+                                            ->label('Fecha de Recepcion')
+                                            ->default(now())
+                                            ->native(false)
 
                                     ]),
                                 RichEditor::make('observations')
@@ -140,7 +150,25 @@ class TramitesTable
                                     ->required()
                                     ->columnSpanFull()
                             ])
-                    ]),
+                    ])
+                    ->action(function (array $data, Tramite $record) {
+                        // Crear la derivación
+                        $record->derivations()->create([
+                            'tramite_id' => $data['tramite_id'],
+                            'from_area_id' => $data['from_area_id'],
+                            'to_area_id' => $data['to_area_id'],
+                            'user_id' => $data['user_id'],
+                            'observations' => $data['observations'],
+                            'status' => $data['status'],
+                            'received_at' => $data['received_at'],
+                        ]);
+
+                        // Actualizar el estado del trámite
+                        $record->update([
+                            'status' => 'derived',
+                            'area_oreigen_id' => $data['to_area_id'],
+                        ]);
+                    }),
                 EditAction::make(),
                 ViewAction::make(),
                 DeleteAction::make(),

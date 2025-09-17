@@ -3,8 +3,12 @@
 @source '../../../../app/Filament/User/**/*';
 @source '../../../../resources/views/filament/user/**/*';
 
-.fi-topbar-item fi-active a {
-  @apply bg-indigo-500;
+.fi-topbar {
+  @apply flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8;
+}
+
+.fi-topbar-item.fi-active a {
+  @apply bg-amber-500;
 
   &>svg,
   span {
@@ -12,14 +16,14 @@
   }
 
   &:hover {
-    @apply bg-indigo-400;
+    @apply bg-amber-400;
   }
 }
 
-/* .fi-topbar {
+.fi-topbar {
   @apply !bg-inherit ring-0 shadow-none;
 }
 
 .fi-sidebar-header {
   @apply !bg-inherit ring-0 shadow-none;
-} */
+}
