@@ -2,12 +2,12 @@
 
 namespace App\Filament\Resources\Tramites\Schemas;
 
-use Filament\Infolists\Components\IconEntry;
-use Filament\Infolists\Components\RepeatableEntry;
-use Filament\Infolists\Components\Section;
-use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Storage;
+use Filament\Schemas\Components\Section;
+use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\RepeatableEntry;
 use Joaopaulolndev\FilamentPdfViewer\Infolists\Components\PdfViewerEntry;
 
 class TramiteInfolist
@@ -17,6 +17,7 @@ class TramiteInfolist
         return $schema
             ->components([
                 Section::make('Información del Trámite')
+                    ->columnSpanFull()
                     ->schema([
                         TextEntry::make('number'),
                         TextEntry::make('subject'),
@@ -42,13 +43,16 @@ class TramiteInfolist
                         TextEntry::make('folio'),
                         TextEntry::make('reception_date')
                             ->date(),
-                        PdfViewerEntry::make('file_path'),
-                        //  ->fileUrl(fn($record) => Storage::url($record->file_path)),
+                        PdfViewerEntry::make('file_path')
+                            ->label('View the PDF')
+                            ->minHeight('40svh')
+                            ->columnSpanFull(),
+                        // ->fileUrl(fn($record) => $record->file_path ? asset('storage/' . $record->file_path) : null),
                         TextEntry::make('condition'),
                         TextEntry::make('status')
                             ->label('Estado')
                             ->badge()
-                            ->formatStateUsing(fn (string $state): string => match ($state) {
+                            ->formatStateUsing(fn(string $state): string => match ($state) {
                                 'draft' => 'Borrador',
                                 'received' => 'Recibido',
                                 'in_process' => 'En Proceso',
@@ -57,7 +61,7 @@ class TramiteInfolist
                                 'archived' => 'Archivado',
                                 default => ucfirst($state),
                             })
-                            ->color(fn (string $state): string => match ($state) {
+                            ->color(fn(string $state): string => match ($state) {
                                 'draft' => 'gray',
                                 'received' => 'info',
                                 'in_process' => 'warning',
@@ -88,7 +92,7 @@ class TramiteInfolist
                                     ->dateTime(),
                                 TextEntry::make('estado')
                                     ->badge()
-                                    ->color(fn (string $state): string => match ($state) {
+                                    ->color(fn(string $state): string => match ($state) {
                                         'pendiente' => 'warning',
                                         'recibido' => 'info',
                                         'procesado' => 'primary',
@@ -115,7 +119,7 @@ class TramiteInfolist
                                 TextEntry::make('tipo_respuesta')
                                     ->label('Tipo')
                                     ->badge()
-                                    ->color(fn (string $state): string => match ($state) {
+                                    ->color(fn(string $state): string => match ($state) {
                                         'informativa' => 'info',
                                         'resolutiva' => 'success',
                                         'derivacion_interna' => 'warning',
@@ -130,10 +134,10 @@ class TramiteInfolist
                                     ->prose(),
                                 TextEntry::make('archivo_adjunto')
                                     ->label('Archivo Adjunto')
-                                    ->url(fn ($record) => $record->archivo_adjunto ? asset('storage/'.$record->archivo_adjunto) : null)
+                                    ->url(fn($record) => $record->archivo_adjunto ? asset('storage/' . $record->archivo_adjunto) : null)
                                     ->openUrlInNewTab()
                                     ->placeholder('Sin archivo adjunto')
-                                    ->visible(fn ($record) => ! empty($record->archivo_adjunto)),
+                                    ->visible(fn($record) => ! empty($record->archivo_adjunto)),
                             ])
                             ->columns(3)
                             ->placeholder('No hay respuestas registradas'),

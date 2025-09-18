@@ -60,7 +60,7 @@
             </div>
         </div>
     </nav>
-    <main class="mt-20">
+    <main class="mt-25">
         {{ $slot }}
     </main>
     @livewire('notifications') {{-- Only required if you wish to send flash notifications --}}

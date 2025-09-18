@@ -141,19 +141,6 @@ class CreateTramite extends Component implements HasActions, HasSchemas
                                             ->disabled()
                                             ->dehydrated()
                                             ->required(),
-                                        // Schemas\Components\Section::make('')
-                                        //     ->schema([
-
-                                        //         Schemas\Components\Grid::make()
-                                        //             ->schema([])->columns(2),
-                                        //     ]),
-                                        // Schemas\Components\Section::make('')
-                                        //     ->schema([
-                                        //         Schemas\Components\Grid::make()
-                                        //             ->schema([])->columns(2),
-
-                                        //     ]),
-
                                         Select::make('area_oreigen_id')
                                             ->label('Area')
                                             ->options([
@@ -175,7 +162,6 @@ class CreateTramite extends Component implements HasActions, HasSchemas
                                             ->label('Folio')
                                             // ->hint('Forgotten your password? Bad luck.')
                                             ->required()
-
                                             ->numeric(),
                                     ])->columns(2),
                                 Textarea::make('subject')
@@ -187,12 +173,14 @@ class CreateTramite extends Component implements HasActions, HasSchemas
                             ->label('Acepto que todo acto administrativo derivado del presente procedimiento se me
                                             notifique a mi correo electrónico (numeral 4 del artículo 20° del Texto Único
                                             Ordenado de la Ley N° 27444)')
+                            ->required()
                             ->rule('required')
-
                             ->columnSpanFull(),
                     ])->columns(4),
                 AdvancedFileUpload::make('file_path')
                     ->label('Adjuntar documento')
+                    ->disk('public')
+                    ->directory('tramites')
                     ->required()
                     ->pdfPreviewHeight(1000) // Customize preview height
                     ->pdfDisplayPage(1) // Set default page

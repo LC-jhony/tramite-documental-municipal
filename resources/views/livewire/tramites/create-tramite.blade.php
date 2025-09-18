@@ -1,7 +1,7 @@
 <x-container>
     <form wire:submit="create">
         <div class="flex justify-end">
-            <div class="fixed top-20 ">
+            <div class="fixed top-30 ">
                 <x-filament::button type="submit" icon="heroicon-m-folder-plus">
                     Registrar Tramite
                 </x-filament::button>
