@@ -14,6 +14,7 @@ use Filament\Schemas\Components\Grid;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\DatePicker;
 use Filament\Schemas\Components\Fieldset;
@@ -212,6 +213,16 @@ class CreateTramite extends Component implements HasActions, HasSchemas
         $record = Tramite::create($data);
 
         $this->form->model($record)->saveRelationships();
+        $this->reset();
+        $this->resetValidation();
+        $this->getSavedNotification()->send();
+    }
+    public function getSavedNotification(): Notification
+    {
+        return Notification::make()
+            ->title('Documento')
+            ->body('Se registro tu tramite corectamente revise su correo')
+            ->success();
     }
     #[Layout('components.layouts.app')]
     public function render(): View
